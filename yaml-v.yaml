@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yaml-v
+  namespace: cm-reload
+  labels:
+    app: yaml-v
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: yaml-v
+  template:
+    metadata:
+      labels:
+        app: yaml-v
+    spec:
+      containers:
+        - name: yaml-v
+          image: yaml-v:v0.1
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+      serviceAccount: diet-reloader
+      serviceAccountName: diet-reloader
+      terminationGracePeriodSeconds: 30
